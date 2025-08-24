@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Upload for Print/Xerox</h2>
+<form method="post" enctype="multipart/form-data" class="card">
+  <label>Choose Print Vendor
+    <select name="vendor_id" required>
+      {% for p in printers %}
+        <option value="{{p.id}}">{{p.full_name or p.username}}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>File <input type="file" name="file" required></label>
+  <label>Copies <input type="number" name="copies" min="1" value="1"></label>
+  <label>Color
+    <select name="color">
+      <option value="bw">Black & White</option>
+      <option value="color">Color</option>
+    </select>
+  </label>
+  <label>Binding
+    <select name="binding">
+      <option value="none">None</option>
+      <option value="spiral">Spiral</option>
+      <option value="staple">Staple</option>
+    </select>
+  </label>
+  <button type="submit">Submit & Pay at Pickup</button>
+</form>
+{% endblock %}

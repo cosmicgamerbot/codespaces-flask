@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>User & Vendor Management</h2>
+<form method="post" class="card">
+  <div class="row">
+    <label>Username <input name="username" required></label>
+    <label>Password <input name="password" required></label>
+    <label>Role
+      <select name="role" id="role" onchange="onRoleChange()">
+        <option value="student">student</option>
+        <option value="vendor">vendor</option>
+        <option value="admin">admin</option>
+      </select>
+    </label>
+    <label id="vendorTypeWrap" style="display:none">Vendor Type
+      <select name="vendor_type">
+        <option value="canteen">canteen</option>
+        <option value="print">print</option>
+      </select>
+    </label>
+  </div>
+  <button type="submit">Create</button>
+</form>
+<script>
+function onRoleChange(){
+  const show = document.getElementById('role').value === 'vendor';
+  document.getElementById('vendorTypeWrap').style.display = show ? 'block' : 'none';
+}
+</script>
+
+<table class="table">
+  <thead><tr><th>ID</th><th>User</th><th>Role</th><th>Vendor</th><th>Since</th></tr></thead>
+  <tbody>
+  {% for u in users %}
+    <tr><td>{{u.id}}</td><td>{{u.username}}</td><td>{{u.role}}</td><td>{{u.vendor_type or '-'}}</td><td>{{u.created_at}}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

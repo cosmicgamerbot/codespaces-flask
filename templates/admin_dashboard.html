@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="grid">
+  <div class="stat">Users <b>{{stats.users}}</b></div>
+  <div class="stat">Canteens <b>{{stats.canteens}}</b></div>
+  <div class="stat">Orders <b>{{stats.orders}}</b></div>
+  <div class="stat">Print Jobs <b>{{stats.prints}}</b></div>
+</div>
+<a class="button" href="/admin/users">Manage Users</a>
+{% endblock %}

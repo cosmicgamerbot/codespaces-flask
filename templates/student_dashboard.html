@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Student Home</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Canteens</h3>
+    <ul>
+      {% for c in canteens %}
+      <li>
+        <a href="/canteen/{{c.id}}">{{c.name}}</a> — {% if c.is_open %}Open{% else %}Closed{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Print & Xerox</h3>
+    <ul>
+      {% for p in printers %}
+      <li>{{p.full_name or p.username}} ({{p.username}})</li>
+      {% else %}
+      <li>No print vendors yet.</li>
+      {% endfor %}
+    </ul>
+    <a class="button" href="/print/upload">Upload Document</a>
+  </div>
+</div>
+{% endblock %}

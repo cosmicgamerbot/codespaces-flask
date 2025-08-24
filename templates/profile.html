@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Profile</h2>
+<h3>Orders</h3>
+<table class="table">
+  <thead><tr><th>ID</th><th>Status</th><th>Total</th><th>Paid</th></tr></thead>
+  <tbody>
+  {% for o in orders %}
+  <tr><td>{{o.id}}</td><td>{{o.status}}</td><td>₹{{'%.2f'|format(o.total)}}</td><td>{{'Yes' if o.paid else 'No'}}</td></tr>
+  {% else %}
+  <tr><td colspan="4">No orders.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h3>Print Jobs</h3>
+<table class="table">
+  <thead><tr><th>ID</th><th>Status</th><th>Price</th><th>Paid</th></tr></thead>
+  <tbody>
+  {% for p in prints %}
+  <tr><td>{{p.id}}</td><td>{{p.status}}</td><td>₹{{'%.2f'|format(p.price)}}</td><td>{{'Yes' if p.paid else 'No'}}</td></tr>
+  {% else %}
+  <tr><td colspan="4">No print jobs.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

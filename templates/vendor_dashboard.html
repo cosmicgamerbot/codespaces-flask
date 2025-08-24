@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Vendor Dashboard ({{my_type}})</h2>
+{% if my_type == 'canteen' %}
+  <h3>Canteen Orders</h3>
+  <table class="table">
+    <thead><tr><th>ID</th><th>Status</th><th>Total</th><th>Paid</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+      <tr>
+        <td>{{o.id}}</td>
+        <td>{{o.status}}</td>
+        <td>₹{{'%.2f'|format(o.total)}}</td>
+        <td>{{'Yes' if o.paid else 'No'}}</td>
+        <td>
+          <a class="button sm" href="/vendor/order/canteen/{{o.id}}/accept">Accept</a>
+          <a class="button sm" href="/vendor/order/canteen/{{o.id}}/progress">In Progress</a>
+          <a class="button sm" href="/vendor/order/canteen/{{o.id}}/ready">Ready</a>
+          <a class="button sm" href="/vendor/order/canteen/{{o.id}}/paid">Mark Paid</a>
+          <a class="button sm danger" href="/vendor/order/canteen/{{o.id}}/reject">Reject</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <h3>Print Jobs</h3>
+  <table class="table">
+    <thead><tr><th>ID</th><th>Status</th><th>Price</th><th>Paid</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for p in prints %}
+      <tr>
+        <td>{{p.id}}</td><td>{{p.status}}</td><td>₹{{'%.2f'|format(p.price)}}</td><td>{{'Yes' if p.paid else 'No'}}</td>
+        <td>
+          <a class="button sm" href="/vendor/order/print/{{p.id}}/accept">Accept</a>
+          <a class="button sm" href="/vendor/order/print/{{p.id}}/progress">In Progress</a>
+          <a class="button sm" href="/vendor/order/print/{{p.id}}/ready">Ready</a>
+          <a class="button sm" href="/vendor/order/print/{{p.id}}/paid">Mark Paid</a>
+          <a class="button sm danger" href="/vendor/order/print/{{p.id}}/reject">Reject</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+<a class="button" href="/vendor/menu">Manage Menu</a>
+{% endblock %}

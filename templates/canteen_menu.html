@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{canteen.name}} – Live Menu</h2>
+<p>Estimated queue time: <b>{{queue_time}} mins</b></p>
+<table class="table">
+  <thead><tr><th>Item</th><th>Price</th><th>Avail</th><th>Add</th></tr></thead>
+  <tbody>
+  {% for i in items %}
+    <tr>
+      <td>{{i.name}}</td>
+      <td>₹{{'%.2f'|format(i.price)}}</td>
+      <td>{% if i.available %}Yes{% else %}No{% endif %}</td>
+      <td>
+        {% if i.available %}
+        <form method="post" action="/cart/add" class="inline">
+          <input type="hidden" name="item_id" value="{{i.id}}">
+          <input type="number" name="qty" min="1" value="1" style="width:60px">
+          <button type="submit">Add</button>
+        </form>
+        {% else %}-{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<a class="button" href="/cart">Go to Cart</a>
+<form method="post" action="/order/checkout">
+  <input type="hidden" name="canteen_id" value="{{canteen.id}}" />
+  <button class="button secondary" type="submit">Checkout</button>
+</form>
+{% endblock %}

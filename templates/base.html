@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sairam Campus Services</title>
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#0a4aa6" />
+  <link rel="stylesheet" href="/static/styles.css">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', ()=> navigator.serviceWorker.register('/static/service-worker.js'));
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Sairam Campus Services</h1>
+    <nav>
+      {% if session.username %}
+        <span>Hi, {{session.username}}</span>
+        <a href="/">Home</a>
+        <a href="/notifications">Notifications</a>
+        {% if session.role == 'student' %}<a href="/profile">Profile</a>{% endif %}
+        {% if session.role == 'vendor' %}<a href="/vendor/menu">Menu Update</a>{% endif %}
+        {% if session.role == 'admin' %}<a href="/admin/users">Users</a>{% endif %}
+        <a href="/logout">Logout</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for cat,msg in messages %}<div class="flash-{{cat}}">{{msg}}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">© {{2025}} Sairam Institutions</footer>
+</body>
+</html>

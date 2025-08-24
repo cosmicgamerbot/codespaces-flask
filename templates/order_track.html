@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if is_print %}
+  <h2>Print Job #{{order.id}}</h2>
+  <p>Status: <b>{{order.status}}</b> | Paid: <b>{{'Yes' if order.paid else 'No'}}</b></p>
+  <p>OTP: <code>{{order.otp_code}}</code> (show at pickup)</p>
+  <a class="button" href="/pay/upi/print/{{order.id}}" target="_blank">Get UPI Intent</a>
+{% else %}
+  <h2>Order #{{order.id}}</h2>
+  <p>Status: <b>{{order.status}}</b> | Paid: <b>{{'Yes' if order.paid else 'No'}}</b></p>
+  <p>OTP: <code>{{order.otp_code}}</code> (show at pickup)</p>
+  <h3>Items</h3>
+  <ul>
+    {% for i in items %}
+      <li>{{i.name}} × {{i.qty}} — ₹{{'%.2f'|format(i.price*i.qty)}}</li>
+    {% endfor %}
+  </ul>
+  <p>Total: <b>₹{{'%.2f'|format(order.total)}}</b></p>
+  <a class="button" href="/pay/upi/canteen/{{order.id}}" target="_blank">Get UPI Intent</a>
+{% endif %}
+{% endblock %}
